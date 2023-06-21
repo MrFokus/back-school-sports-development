@@ -14,7 +14,7 @@ let sendFunc = async (mail,phone,comment)=>
 {
     try{
         let result = await transporter.sendMail({
-            from: '"НОВАЯ ЗАЯВКА НА ЗАПИСЬ!" <german_glubokov@mail.ru>',
+            from: '"НОВАЯ ЗАЯВКА НА ЗАПИСЬ!" <point20000000@mail.ru>',
             to: 'point20000000@mail.ru',
             subject: 'Сообщение от '+mail,
             text: `Новая заявка на запись \n Телефон: ${phone}\n Комментарий: ${comment}`,
