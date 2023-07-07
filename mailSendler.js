@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config()
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.mail.ru',
+    host: 'smtp.yandex.ru',
     port: 465,
     secure: true,
     auth: {
@@ -15,8 +15,8 @@ let sendFunc = async (mail,phone,comment)=>
 {
     try{
         let result = await transporter.sendMail({
-            from: '"НОВАЯ ЗАЯВКА НА ЗАПИСЬ!" <point20000000@mail.ru>',
-            to: 'point20000000@mail.ru',
+            from: `"НОВАЯ ЗАЯВКА НА ЗАПИСЬ!" <${process.env.MAIL}>`,
+            to: process.env.MAIL,
             subject: 'Сообщение от '+mail,
             text: `Новая заявка на запись \n Телефон: ${phone}\n Комментарий: ${comment}`,
             html:
