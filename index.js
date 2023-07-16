@@ -24,14 +24,16 @@ app.get('/gallery',(req,res)=>{
         let output = []
         axios.get(`https://api.vk.com/method/wall.get?count=100&access_token=${process.env.VK_SERVICE_TOKEN}&v=5.131&owner_id=-187206619&album_id=wall&extended=1`).then(data=>{
             if (req.query.select === 'all'){
+
                 data.data.response.items.forEach(photos=>{
                     if (photos.attachments.length&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
+                        console.log(photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w'))
                         output.push(
                             {
                                 type:'photo',
                                 text:photos.text,
                                 date:photos.date,
-                                url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')].url,
+                                url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')===-1?photos.attachments[0].photo.sizes.length-1:photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')].url,
                             }
                         )
                     }
