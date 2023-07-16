@@ -41,7 +41,6 @@ app.get('/gallery',(req,res)=>{
                 let description=photos.text.split('\n')
                 description = description.join(' ')
                 description = description.split(' ')
-                console.log(description)
                 if (photos.attachments.length&&description.includes(`#${req.query.select}`)&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
                     output.push(
                         {
