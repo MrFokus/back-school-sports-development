@@ -27,6 +27,7 @@ app.get('/gallery',(req,res)=>{
                 if (photos.attachments.length&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
                     output.push(
                         {
+                            type:'photo',
                             text:photos.text,
                             date:photos.date,
                             url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].url,
@@ -44,6 +45,7 @@ app.get('/gallery',(req,res)=>{
                 if (photos.attachments.length&&description.includes(`#${req.query.select}`)&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
                     output.push(
                         {
+                            type:'photo',
                             text:photos.text,
                             date:photos.date,
                             url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].url,
