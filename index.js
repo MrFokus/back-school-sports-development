@@ -30,7 +30,7 @@ app.get('/gallery',(req,res)=>{
                             type:'photo',
                             text:photos.text,
                             date:photos.date,
-                            url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].url,
+                            url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')].url,
                         }
                     )
                 }
