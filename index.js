@@ -27,7 +27,6 @@ app.get('/gallery',(req,res)=>{
 
                 data.data.response.items.forEach(photos=>{
                     if (photos.attachments.length&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
-                        console.log(photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w'))
                         output.push(
                             {
                                 type:'photo',
