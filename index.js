@@ -20,42 +20,48 @@ app.post('/',(req,res)=>{
 
 })
 app.get('/gallery',(req,res)=>{
-    let output = []
-    axios.get(`https://api.vk.com/method/wall.get?count=100&access_token=${process.env.VK_SERVICE_TOKEN}&v=5.131&owner_id=-187206619&album_id=wall&extended=1`).then(data=>{
-        if (req.query.select === 'all'){
-            data.data.response.items.forEach(photos=>{
-                if (photos.attachments.length&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
-                    output.push(
-                        {
-                            type:'photo',
-                            text:photos.text,
-                            date:photos.date,
-                            url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')].url,
-                        }
-                    )
-                }
-            })
-        }
-        else{
-            data.data.response.items.forEach(photos=>{
-                let description=photos.text.split('\n')
-                description = description.join(' ')
-                description = description.split(' ')
-                if (photos.attachments.length&&description.includes(`#${req.query.select}`)&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
-                    output.push(
-                        {
-                            type:'photo',
-                            text:photos.text,
-                            date:photos.date,
-                            url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].url,
-                        }
-                    )
-                }
-            })
-        }
+    try {
+        let output = []
+        axios.get(`https://api.vk.com/method/wall.get?count=100&access_token=${process.env.VK_SERVICE_TOKEN}&v=5.131&owner_id=-187206619&album_id=wall&extended=1`).then(data=>{
+            if (req.query.select === 'all'){
+                data.data.response.items.forEach(photos=>{
+                    if (photos.attachments.length&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
+                        output.push(
+                            {
+                                type:'photo',
+                                text:photos.text,
+                                date:photos.date,
+                                url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.findIndex(item=>item.type ==='w')].url,
+                            }
+                        )
+                    }
+                })
+            }
+            else{
+                data.data.response.items.forEach(photos=>{
+                    let description=photos.text.split('\n')
+                    description = description.join(' ')
+                    description = description.split(' ')
+                    if (photos.attachments.length&&description.includes(`#${req.query.select}`)&&photos.attachments[0].type==='photo'&&photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].width>photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].height){
+                        output.push(
+                            {
+                                type:'photo',
+                                text:photos.text,
+                                date:photos.date,
+                                url:photos.attachments[0].photo.sizes[photos.attachments[0].photo.sizes.length-1].url,
+                            }
+                        )
+                    }
+                })
+            }
 
-        res.json(output)
-    })
+            res.json(output)
+        })
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 })
 
 app.listen(3001,()=>{
