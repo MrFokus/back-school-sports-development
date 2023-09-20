@@ -14,6 +14,7 @@ let transporter = nodemailer.createTransport({
 let sendFunc = async (mail,phone,comment,company)=>
 {
     try{
+        console.log(company,company?true:false)
         let result = await transporter.sendMail({
             from: `${company ?'Предложение о сотрудничестве':'НОВАЯ ЗАЯВКА НА ЗАПИСЬ!'} <${process.env.MAIL}>`,
             to: process.env.MAIL,
