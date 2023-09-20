@@ -11,16 +11,16 @@ let transporter = nodemailer.createTransport({
     },
 });
 
-let sendFunc = async (mail,phone,comment)=>
+let sendFunc = async (mail,phone,comment,company)=>
 {
     try{
         let result = await transporter.sendMail({
-            from: `"НОВАЯ ЗАЯВКА НА ЗАПИСЬ!" <${process.env.MAIL}>`,
+            from: `${company ?'Предложение о сотрудничестве':'НОВАЯ ЗАЯВКА НА ЗАПИСЬ!'} <${process.env.MAIL}>`,
             to: process.env.MAIL,
             subject: 'Сообщение от '+mail,
-            text: `Новая заявка на запись \n Телефон: ${phone}\n Комментарий: ${comment}`,
+            text: `${company ?'Предложение о сотрудничестве':'Новая заявка на запись'} ${company? 'Компания: '+company+'\n':''} \n Телефон: ${phone}\n Комментарий: ${comment}`,
             html:
-                `<h2>Новая заявка на запись</h2> <br> Телефон: <strong> ${phone}</strong><br> Комментарий: <strong>${comment}</strong>`,
+                `<h2>${company ?'Предложение о сотрудничестве':'Новая заявка на запись'}</h2> ${company? '<br> Компания: <strong> '+company+'</strong><br>':''} <br> Телефон: <strong> ${phone}</strong><br> Комментарий: <strong>${comment}</strong>`,
         });
         return result.response
     }

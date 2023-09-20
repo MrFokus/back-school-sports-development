@@ -12,7 +12,7 @@ app.get('/',(req,res)=>{
 app.post('/',(req,res)=>{
     try{
         if (req.body.policy){
-            mailSend(req.body.mail,req.body.phone,req.body.comment).then(result=>res.json({status:result}))
+            mailSend(req.body.mail,req.body.phone,req.body.comment,req.company).then(result=>res.json({status:result}))
         }
         else{
             res.json({error:"Не принято соглашение об обработке персональных данных"})
